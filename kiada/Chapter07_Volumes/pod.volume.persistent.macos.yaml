@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: host-path-image-pod
+spec:
+  terminationGracePeriodSeconds: 5
+  containers:
+    - name: host-path-image-ctr
+      image: ubuntu:latest
+      command: ['/bin/bash', '-c', 'sleep infinity']
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - name: ext4-data
+          mountPath: /media/volume-ext4-image
+  volumes:
+    - name: ext4-data
+      hostPath:
+        path: /Users/maciek/epfl/k8s/data/tmp/vol
